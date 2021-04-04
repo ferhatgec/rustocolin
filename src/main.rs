@@ -29,7 +29,19 @@ fn main() {
         reset: "\x1b[0m".to_string(),
 
         light_gray: "".to_string(),
-        white: "".to_string()
+        white: "".to_string(),
+
+        info_table: vec![
+            "name: ",
+            "-----",
+            "\x1b[0;31mr\x1b[0;32mg\x1b[0;34mb\x1b[0m  : ",
+            "hex  : ",
+            "cmyk : ",
+            "hsl  : ",
+            "hsv  : "
+        ],
+
+        line: 0
     };
 
     colin.light_gray = colin.set_color(171u32, 171u32, 171u32);
