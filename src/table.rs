@@ -80,6 +80,11 @@ impl Colin {
     pub fn init(&mut self, r: u32, g: u32, b: u32) {
         self.color_data = self.set_color(r, g, b);
 
+        self.hex = crate::convert::to_hex(r, g, b);
+
+        // Name
+        self.info_table[0] = format!("{}color{}: ", self.set_fg_color(r, g, b), self.reset);
+
         // Hex
         self.info_table[3] = format!("{}hex  : {}{}", self.red, self.orange, self.hex);
 
