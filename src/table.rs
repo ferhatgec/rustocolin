@@ -34,7 +34,8 @@ pub struct Colin {
     pub g: u32,
     pub b: u32,
 
-    pub hex: String
+    pub hex: String,
+    pub cmyk: (String, String, String, String)
 }
 
 impl Colin {
@@ -91,6 +92,8 @@ impl Colin {
         self.g = g;
         self.b = b;
 
+        self.cmyk = crate::convert::to_cmyk(r, g, b);
+
         // Name
         self.info_table[0] = format!("{}color{}: ", self.set_fg_color(r, g, b), self.reset);
 
@@ -98,7 +101,7 @@ impl Colin {
         self.info_table[3] = format!("{}hex  : {}{}", self.red, self.orange, self.hex);
 
         // Cmyk
-        self.info_table[4] = format!("{}cmyk : {}{}", self.orange, self.yellow, "work-in-progress");
+        self.info_table[4] = format!("{}cmyk : {}", self.orange, self.yellow);
 
         // Hsl
         self.info_table[5] = format!("{}hsl  : {}{}", self.yellow, self.green, "work-in-progress");
@@ -170,6 +173,7 @@ impl Colin {
 
     pub fn name_function(&mut self) {}
     pub fn hmm_function(&mut self) {}
+
     pub fn rgb_function(&mut self) {
         print!("{}rgb{}({}{}, {}{}, {}{}{})",
                 self.pink,
@@ -184,7 +188,20 @@ impl Colin {
     }
 
     pub fn hex_function(&mut self) {}
-    pub fn cmyk_function(&mut self){}
+
+    pub fn cmyk_function(&mut self) {
+        print!("({}{}{}, {}{}, {}{}, {}{})",
+                "\x1b[0;31m",
+                self.cmyk.0,
+                self.reset,
+                "\x1b[0;32m",
+                self.cmyk.1,
+                "\x1b[0;34m",
+                self.cmyk.2,
+                self.pink,
+                self.cmyk.3);
+    }
+
     pub fn hsl_function(&mut self) {}
     pub fn hsv_function(&mut self) {}
     pub fn hmm2_function(&mut self) {}
