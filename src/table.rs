@@ -35,7 +35,8 @@ pub struct Colin {
     pub b: u32,
 
     pub hex: String,
-    pub cmyk: (String, String, String, String)
+    pub cmyk: (String, String, String, String),
+    pub hsl: (String, String, String)
 }
 
 impl Colin {
@@ -93,6 +94,7 @@ impl Colin {
         self.b = b;
 
         self.cmyk = crate::convert::to_cmyk(r, g, b);
+        self.hsl  = crate::convert::to_hsl (r, g, b);
 
         // Name
         self.info_table[0] = format!("{}color{}: ", self.set_fg_color(r, g, b), self.reset);
@@ -104,7 +106,7 @@ impl Colin {
         self.info_table[4] = format!("{}cmyk : {}", self.orange, self.yellow);
 
         // Hsl
-        self.info_table[5] = format!("{}hsl  : {}{}", self.yellow, self.green, "work-in-progress");
+        self.info_table[5] = format!("{}hsl  : {}", self.yellow, self.green);
 
         // Hsv
         self.info_table[6] = format!("{}hsv  : {}{}", self.green, self.blue, "work-in-progress");
@@ -202,7 +204,17 @@ impl Colin {
                 self.cmyk.3);
     }
 
-    pub fn hsl_function(&mut self) {}
+    pub fn hsl_function(&mut self) {
+        print!("({}{}{}, {}{}, {}{})",
+               "\x1b[0;31m",
+               self.hsl.0,
+               self.reset,
+               "\x1b[0;32m",
+               self.hsl.1,
+               "\x1b[0;34m",
+               self.hsl.2);
+    }
+
     pub fn hsv_function(&mut self) {}
     pub fn hmm2_function(&mut self) {}
     pub fn ascii_function(&mut self) {}

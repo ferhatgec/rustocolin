@@ -64,7 +64,8 @@ fn main() {
         b: 0,
 
         hex: "".to_string(),
-        cmyk: ("".to_string(), "".to_string(), "".to_string(), "".to_string())
+        cmyk: ("".to_string(), "".to_string(), "".to_string(), "".to_string()),
+        hsl: ("".to_string(), "".to_string(), "".to_string())
     };
 
     colin.light_gray = colin.set_color(171u32, 171u32, 171u32);
