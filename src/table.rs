@@ -114,10 +114,10 @@ impl Colin {
         self.info_table[6] = format!("{}hsv  : {}", self.green, self.blue);
 
         // Ascii
-        self.info_table[8] = format!("{}ascii: {}{}", self.blue, self.purple, "work-in-progress");
+        self.info_table[8] = format!("{}ascii: {}", self.blue, self.purple);
 
         // Esc
-        self.info_table[9] = format!("{}esc  : {}{}", self.purple, self.pink, "work-in-progress");
+        self.info_table[9] = format!("{}esc  : {}", self.purple, self.pink);
     }
 
     pub fn print_color_box(&mut self, split: bool) {
@@ -229,6 +229,13 @@ impl Colin {
     }
 
     pub fn hmm2_function(&mut self) {}
-    pub fn ascii_function(&mut self) {}
-    pub fn esc_function(&mut self) {}
+
+    pub fn ascii_function(&mut self) {
+        print!("\\x1b{}", self.color_data.chars().next().map
+            (|c| &self.color_data[c.len_utf8()..]).unwrap());
+    }
+
+    pub fn esc_function(&mut self) {
+        print!("\\x1b");
+    }
 }
