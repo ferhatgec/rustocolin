@@ -13,7 +13,7 @@ fn main() {
     let args: Vec<_> = std::env::args().collect();
 
     if args.len() < 4 {
-        print!("Fegeya Colin : CLI Color info tool\n\
+        println!("Fegeya Colin : CLI Color info tool\n\
             {sep}\n\
             {command} {{r}} {{g}} {{b}}\n\
             {sep}\n\
