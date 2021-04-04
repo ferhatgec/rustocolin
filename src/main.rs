@@ -58,6 +58,11 @@ fn main() {
         ],
 
         line: 0,
+
+        r: 0,
+        g: 0,
+        b: 0,
+
         hex: "".to_string()
     };
 

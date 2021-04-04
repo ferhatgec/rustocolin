@@ -29,6 +29,11 @@ pub struct Colin {
     pub info_table: Vec<String>,
 
     pub line: usize,
+
+    pub r: u32,
+    pub g: u32,
+    pub b: u32,
+
     pub hex: String
 }
 
@@ -81,6 +86,10 @@ impl Colin {
         self.color_data = self.set_color(r, g, b);
 
         self.hex = crate::convert::to_hex(r, g, b);
+
+        self.r = r;
+        self.g = g;
+        self.b = b;
 
         // Name
         self.info_table[0] = format!("{}color{}: ", self.set_fg_color(r, g, b), self.reset);
@@ -161,7 +170,19 @@ impl Colin {
 
     pub fn name_function(&mut self) {}
     pub fn hmm_function(&mut self) {}
-    pub fn rgb_function(&mut self) {}
+    pub fn rgb_function(&mut self) {
+        print!("{}rgb{}({}{}, {}{}, {}{}{})",
+                self.pink,
+                self.reset,
+                "\x1b[0;31m",
+                self.r.to_string(),
+                "\x1b[0;32m",
+                self.g.to_string(),
+                "\x1b[0;34m",
+                self.b.to_string(),
+                self.reset);
+    }
+
     pub fn hex_function(&mut self) {}
     pub fn cmyk_function(&mut self){}
     pub fn hsl_function(&mut self) {}
