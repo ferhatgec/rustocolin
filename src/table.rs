@@ -5,7 +5,7 @@
 //
 //
 
-pub struct Colin {
+pub struct Colin<'a> {
     pub color: String,
     pub fg_color: String,
 
@@ -37,10 +37,14 @@ pub struct Colin {
     pub hex: String,
     pub cmyk: (String, String, String, String),
     pub hsl: (String, String, String),
-    pub hsv: (String, String, String)
+    pub hsv: (String, String, String),
+
+    pub names: crate::colors::ColorNames<'a>,
+
+    pub name_of_color: String
 }
 
-impl Colin {
+impl Colin<'_> {
     pub fn set_color(&mut self, r: u32, g: u32, b: u32) -> String {
         return format!("{}{};{};{}m", &self.color, r, g, b);
     }
@@ -97,6 +101,9 @@ impl Colin {
         self.cmyk = crate::convert::to_cmyk(r, g, b);
         self.hsl  = crate::convert::to_hsl (r, g, b);
         self.hsv  = crate::convert::to_hsv (r, g, b);
+
+        self.name_of_color = self.names.find_in(
+            format!("{},{},{}", r, g, b).as_str()).to_string();
 
         // Name
         self.info_table[0] = format!("{}color{}: ", self.set_fg_color(r, g, b), self.reset);
@@ -175,7 +182,10 @@ impl Colin {
         self.newline();
     }
 
-    pub fn name_function(&mut self) {}
+    pub fn name_function(&mut self) {
+        print!("{}", self.name_of_color);
+    }
+
     pub fn hmm_function(&mut self) {}
 
     pub fn rgb_function(&mut self) {

@@ -7,6 +7,7 @@
 
 mod table;
 mod convert;
+mod colors;
 
 fn main() {
     let args: Vec<_> = std::env::args().collect();
@@ -22,6 +23,8 @@ fn main() {
 
         std::process::exit(1);
     }
+
+    let name_data: crate::colors::ColorNames = crate::colors::ColorNames::init();
 
     let mut colin = crate::table::Colin {
         color: "\x1b[48;2;".to_string(),
@@ -66,7 +69,10 @@ fn main() {
         hex: "".to_string(),
         cmyk: ("".to_string(), "".to_string(), "".to_string(), "".to_string()),
         hsl: ("".to_string(), "".to_string(), "".to_string()),
-        hsv: ("".to_string(), "".to_string(), "".to_string())
+        hsv: ("".to_string(), "".to_string(), "".to_string()),
+
+        names: name_data,
+        name_of_color: "".to_string()
     };
 
     colin.light_gray = colin.set_color(171u32, 171u32, 171u32);
