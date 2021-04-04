@@ -133,3 +133,47 @@ pub fn to_hsl(r: u32, g: u32, b: u32) -> (String, String, String) {
      format!("{:.2}", s),
      format!("{:.2}", l))
 }
+
+pub fn to_hsv(r: u32, g: u32, b: u32) -> (String, String, String) {
+    let (mut _r, mut _g, mut _b) = (r as f32, g as f32, b as f32);
+
+    let mut h = 0.0;
+    let (s, v, min, max): (f32, f32, f32, f32);
+
+    _r = _r / 255.0;
+    _g = _g / 255.0;
+    _b = _b / 255.0;
+
+    min = get_min(_r, _g, _b);
+    max = get_max(_r, _g, _b);
+
+    v = max;
+
+    if min == max {
+        return ("0.0".to_string(), "0.0".to_string(), format!("{:.2}", v * 100.0));
+    }
+
+    s = (max - min) / max;
+
+    if _g - _b == 0.0 || _r - _g == 0.0 {
+        h = 0.0;
+    }
+    else if max == _r {
+        h = 60.0 * (_g - _b) / (max - min);
+    }
+    else if max == _g {
+        h = 60.0 * (_b - _r) / (max - min) + 120.0;
+    }
+    else if max == _b {
+        h = 60.0 * (_r - _g) / (max - min) + 240.0;
+    }
+
+
+    if h < 0.0 {
+        h = h + 360.0;
+    }
+
+    (format!("{:.2}", h),
+     format!("{:.2}", s * 100.0),
+     format!("{:.2}", v * 100.0))
+}
